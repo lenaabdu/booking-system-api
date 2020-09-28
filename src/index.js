@@ -13,13 +13,12 @@ const { User } = require('../models/user');
 //const dburi =
 
 
-mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost/database', {
+MongoClient.connect(process.env.MONGO_URI || 'mongodb://localhost/database', {
 
-
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useFindAndModify: false,
+    userNewUrlParser: true,
     useUnifiedTopology: true
+
+
 });
 
 
