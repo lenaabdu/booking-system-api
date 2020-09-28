@@ -16,8 +16,7 @@ mongoose.Promise = global.Promise;
 
 mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost/database', {
 
-    userNewUrlParser: true,
-    useUnifiedTopology: true
+    useNewUrlParser: true
 
 
 });
