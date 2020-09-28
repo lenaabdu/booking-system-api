@@ -15,7 +15,10 @@ const { User } = require('../models/user');
 
 mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost/database', {
 
-    userNewUrlParser: true,
+
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
     useUnifiedTopology: true
 });
 
