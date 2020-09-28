@@ -10,6 +10,7 @@ const { v4: uuidv4 } = require('uuid');
 const mongoose = require('mongoose');
 
 const { User } = require('../models/user');
+mongoose.Promise = global.Promise;
 //const dburi =
 
 
