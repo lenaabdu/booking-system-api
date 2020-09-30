@@ -4,16 +4,8 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
-const { ObjectId } = require('mongodb');
-const { v4: uuidv4 } = require('uuid');
-
 const mongoose = require('mongoose');
-
-const { User } = require('../models/user');
-mongoose.Promise = global.Promise;
-//const dburi =
-
-
+const router = require('../router')
 mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost/database', {
 
     useNewUrlParser: true,
@@ -21,41 +13,14 @@ mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost/database', {
     useUnifiedTopology: true
 
 });
-
-
 const app = express();
-const port = process.env.PORT || 3004
+const port = process.env.PORT || 3007
 app.use(helmet());
 app.use(bodyParser.json());
 app.use(cors());
 app.use(morgan('combined'));
+app.use(router);
 
-app.post('/auth', async(req, res) => {
-    const user = await User.findOne({ username: req.body.username })
-    if (!user) {
-        return res.sendStatus(401)
-    }
-    if (req.body.password !== user.password) {
-        return res.sendStatus(403)
-    }
-    user.token = uuidv4()
-    await user.save()
-    res.send({ token: user.token })
-})
-
-app.use(async(req, res, next) => {
-    const authHeader = req.headers['authorization']
-    const user = await User.findOne({ token: authHeader })
-    if (user) {
-        next()
-    } else {
-        res.sendStatus(403)
-    }
-})
-
-
-
-// starting the server
 app.listen(port, () => {
     console.log(`listening on port ${port}`);
 });
